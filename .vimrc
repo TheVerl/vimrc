@@ -1,10 +1,13 @@
 " Key bindings
+" Tab : Toggles tagbar
+map <Tab> :TagbarToggle<CR>
 " Ctrl + Tab : Next tab
 map <C-Tab> :tabnext<CR>
 " Ctrl + Shift + Tab : Previous Tab
 map <C-S-Tab> :tabprevious<CR>
+nmap <C-n> :tabnew<CR>
 " F6 : Toggle NERDTree
-nmap <F6> :NERDTreeToggle<CR>
+" nmap <F6> :NERDTreeToggle<CR>
 " Ctrl + e: Go to next error
 nmap <C-e> <Plug>(ale_next_wrap)
 " Maps s + Direction to create a new split view.
@@ -17,12 +20,12 @@ map <C-j> <C-W>j
 map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
-" F8 : Toggles tagbar
-nmap <F8> :TagbarToggle<CR>
 " Ctrl + t: Opens a new terminal on the bottom of the screen.
 nmap <C-t> :term<CR>
 " Ctrl + Shift + t: Opens a new terminal in a new tab.
 nmap <C-S-t> :tab term<CR>
+nnoremap <expr> <C-p> (len(system('git rev-parse')) ? ':Files' : ':GFiles --exclude-standard --others --cached')."\<cr>"
+" Opens the fuzzy finder.
 
 " Terminal key bindings
 " Esc : Sets the terminal into normal mode. It can be set back into terminal
@@ -47,7 +50,9 @@ Plug 'bfrg/vim-cpp-modern' " C++ syntax highlighting.
 Plug 'majutsushi/tagbar' " It's like Code Outline in VS Code.
 Plug 'Raimondi/delimitMate' " Autocompletes things like quotes, brackets, curly brackets, etc.
 Plug 'frazrepo/vim-rainbow' " Rainbow brackets, parenthesis, etc.
-Plug 'samsaga2/vim-z80'
+Plug 'samsaga2/vim-z80' " Z80 Syntax highlighting.
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } " Required by fzf.vim.
+Plug 'junegunn/fzf.vim' " Fuzzy finder.
 
 call plug#end()
 
@@ -61,6 +66,9 @@ set guifont=BlexMono\ Nerd\ Font\ 11 " guifont needed by vim-devicons NOTE: only
 set guifontwide=Segoe\ UI\ Mono\ 11
 set splitright " These two split definitions just set the default way vim splits vertically and horitzontaly.
 set splitbelow
+
+" coc
+let g:coc_disable_startup_warning = 1
 
 " sonokai
 let g:sonokai_style = 'andromeda' " that previous statement of colourscheme actually only enabled the plugin which has a few colourschemes, so this statement sets the actual colourscheme.
@@ -79,7 +87,7 @@ let g:airline_powerline_fonts=1 " Enables nice fonts.
 let g:clang_library_path='/usr/lib/llvm-10/lib/libclang.so' " Tells coc where the compiler is.
 
 " ale
-let g:ale_linters = { 'cpp': ['clang'] } " Sets linter for C++.
+let g:ale_linters = { 'cpp': ['clang'], 'java': ['javac'] } " Sets linter for C++.
 let g:ale_sign_warning = '🚧' " Warning sign.
 let g:ale_sign_error =  '🛑 ' " Error sign.
 
